@@ -1,0 +1,22 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>{% block title %}Books{% endblock title %}</title>
+  <link rel="stylesheet" href="{% static 'styles.css' %}">
+  <link rel="icon" href="{% static 'qu-icon.png' %}">
+</head>
+<body>
+
+  {% include "bookmodule/includes/header.html" %}
+
+  <hr>
+
+  {% block content %}{% endblock content %}
+
+  <hr>
+
+  {% include "bookmodule/includes/footer.html" %}
+</body>
+</html>

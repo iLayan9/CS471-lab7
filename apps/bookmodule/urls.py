@@ -22,4 +22,6 @@ urlpatterns = [
     path('html5/text/formatting', views.text_formatting_view),
     path('html5/listing', views.listing_view),
     path('html5/tables', views.tables_view),
+#lab6
+    path('search', views.search_view),
 ]

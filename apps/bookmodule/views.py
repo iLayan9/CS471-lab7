@@ -79,6 +79,7 @@ def tables_view(request):
     return render(request, 'bookmodule/tables.html')
 
 
+
 #lab6
 def __getBooksList():
     book1 = {'id': 12344321, 'title': 'Continuous Delivery', 'author': 'J.Humble and D. Farley'}
@@ -92,7 +93,6 @@ def search_view(request):
         isTitle = request.POST.get('option1')
         isAuthor = request.POST.get('option2')
 
-        # filter books
         books = __getBooksList()
         newBooks = []
 
@@ -108,3 +108,27 @@ def search_view(request):
         return render(request, 'bookmodule/bookList.html', {'books': newBooks})
 
     return render(request, 'bookmodule/search.html')
+
+
+
+#lab7
+
+from .models import Book
+
+def insert_books(request):
+    Book.objects.create(title='Continuous Delivery', author='J.Humble and D. Farley', price=120.00, edition=3)
+    Book.objects.create(title='Reversing: Secrets of Reverse Engineer', author='E. Eilam', price=97.00, edition=2)
+    Book.objects.create(title='The Hundred-Page Machine Learning Book', author='Andriy Burkov', price=100.00, edition=4)
+    return render(request, 'bookmodule/bookList.html', {'books': Book.objects.all()})
+
+def simple_query(request):
+    mybooks = Book.objects.filter(title__icontains='and')
+    return render(request, 'bookmodule/bookList.html', {'books': mybooks})
+
+def complex_query(request):
+    mybooks = Book.objects.filter(author__isnull=False).filter(title__icontains='and').filter(edition__gte=2).exclude(price__lte=100)[:10]
+
+    if len(mybooks) >= 1:
+        return render(request, 'bookmodule/bookList.html', {'books': mybooks})
+    else:
+        return render(request, 'bookmodule/index.html')
